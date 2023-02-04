@@ -23,11 +23,11 @@ public class CareMember {
 	private Long carememberId;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id",referencedColumnName = "user_id")
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name = "caregiverId")
-	private Caregiver caregiver;
+	@JoinColumn(name = "caregiverId" ,referencedColumnName = "user_id")
+	private User caregiver;
 	
 }
