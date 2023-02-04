@@ -13,7 +13,7 @@ public interface FundService {
 
 	FunDto donation(FunDto funDto, HttpServletRequest request, Long userId);
 
-	List<FunDto> getFundsByUser(Integer userId, HttpServletRequest request);
+	List<FunDto> getFundsByUser(Long userId, HttpServletRequest request);
 
 	List<FunDto> getAllSession(Integer pageNumber, Integer pageSize);
 

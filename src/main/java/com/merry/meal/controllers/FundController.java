@@ -21,6 +21,7 @@ import com.merry.meal.config.FundsResponse;
 import com.merry.meal.payload.ApiResponse;
 
 import com.merry.meal.payload.FunDto;
+import com.merry.meal.payload.SessionDto;
 import com.merry.meal.services.FundService;
 
 
@@ -46,16 +47,27 @@ public ResponseEntity<FunDto>donation(@RequestBody FunDto funDto,HttpServletRequ
 }
 
 
+//@GetMapping("/carepost/{userId}")
+//public ResponseEntity<List<FunDto>>getfundByUser(@PathVariable Integer userId,HttpServletRequest request){
+//	List<FunDto>funds=this.fundService.getFundsByUser(userId,request);
+//	System.out.println(funds);
+//	return new ResponseEntity<List<FunDto>>(funds,HttpStatus.OK);
+//	}
+//
+////
+//@GetMapping("/{userId}/caregivepost")
+//public ResponseEntity<List<SessionDto>>getSessionasUser(@PathVariable Long userId,HttpServletRequest request){
+//	List<SessionDto>sessionDtos=this.caregiveService.getsessionByUser(userId,request);
+//	return new ResponseEntity<List<SessionDto>>(sessionDtos,HttpStatus.OK);
+//	
+//}
+
 @GetMapping("/carepost/{userId}")
-public ResponseEntity<List<FunDto>>getfundByUser(@PathVariable Integer userId,HttpServletRequest request){
-	List<FunDto>funds=this.fundService.getFundsByUser(userId,request);
-	System.out.println(funds);
+public ResponseEntity<List<FunDto>>getfundAsUser(@PathVariable Long userId,HttpServletRequest request){
+	List<FunDto>funds=this.fundService.getFundsByUser(userId, request);
 	return new ResponseEntity<List<FunDto>>(funds,HttpStatus.OK);
-	}
-
-
-
-
+	
+}
 
 
 @GetMapping("/page/cares")

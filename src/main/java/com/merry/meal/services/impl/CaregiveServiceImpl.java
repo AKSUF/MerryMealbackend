@@ -68,8 +68,8 @@ public class CaregiveServiceImpl implements CaregiveService {
 			user.getUser_id();
 		}
 		// User user = account.getUser();
-		Caregiver caregiver = new Caregiver();
-		User user = caregiver.getUser();
+		CareMember careMember = new CareMember();
+		User user = careMember.getUser();
 
 		System.out.println("get user entity" + user);
 		Session session = this.modelmapper.map(sessionDto, Session.class);
@@ -91,8 +91,8 @@ public class CaregiveServiceImpl implements CaregiveService {
 			user.getUser_id();
 		}
 
-		Caregiver caregiver = new Caregiver();
-		User user = caregiver.getUser();
+		CareMember careMember = new CareMember();
+		User user = careMember.getUser();
 		System.out.println("get user entity" + user);
 		Session session = this.modelmapper.map(sessionDto, Session.class);
 		session.setCareStatus(CareStatus.Available.name());

@@ -97,7 +97,7 @@ public class FundServiceImpl implements FundService {
 		return this.modelmapper.map(newdonate, FunDto.class);
 	}
 	@Override
-	public List<FunDto> getFundsByUser(Integer userId, HttpServletRequest request) {
+	public List<FunDto> getFundsByUser(Long userId, HttpServletRequest request) {
 		String token = getJWTFromRequest(request);
 		String email = jwtUtils.getUserNameFromToken(token);
 		Account account = accountRepo.findByEmail(email).get();
@@ -113,9 +113,13 @@ public class FundServiceImpl implements FundService {
 		
 		List<Fund>funds=this.fundRepo.findByUser(account.getUser());
 		System.out.println(funds);
-		List<FunDto>fundto=funds.stream().map((fund)->this.modelmapper.map(funds,FunDto.class)).collect(Collectors.toList());
+		List<FunDto>fundto=funds.stream().map((fund)->this.modelmapper.map(fund,FunDto.class)).collect(Collectors.toList());
+		System.out.println("/////////////This is get the value of list------------------------///////////////");
 		return fundto;
 	}
+	
+	
+	
 	@Override
 	public List<FunDto> getAllSession(Integer pageNumber, Integer pageSize) {
 		// TODO Auto-generated method stub
