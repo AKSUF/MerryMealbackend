@@ -68,6 +68,9 @@ public class User {
 	
 	@OneToMany(mappedBy = "caregiver", cascade = CascadeType.MERGE)
 	private List<CareMember>caremembercaregiver;
-
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
+	private List<PartnerFund>partnerfund;
+	
 	
 }

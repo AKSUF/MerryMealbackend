@@ -21,6 +21,7 @@ import com.merry.meal.config.FundsResponse;
 import com.merry.meal.payload.ApiResponse;
 
 import com.merry.meal.payload.FunDto;
+import com.merry.meal.payload.PartnerFundDto;
 import com.merry.meal.payload.SessionDto;
 import com.merry.meal.services.FundService;
 
@@ -113,8 +114,13 @@ public ResponseEntity<FundsResponse> getAllPosts(@RequestParam(value = "pageNumb
 
 	
 }
-
-
+@GetMapping("/listfunduser")
+public ResponseEntity<List<PartnerFundDto>>getpartnerfund(HttpServletRequest request){
+	List<PartnerFundDto>partnerfund=this.fundService.getAllFundUser(request);
+	
+	return new ResponseEntity<List<PartnerFundDto>>(partnerfund,HttpStatus.OK);
+	
+}
 
 
 }

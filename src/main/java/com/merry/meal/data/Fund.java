@@ -31,5 +31,7 @@ public class Fund {
 	@JsonIgnore
 	@ManyToOne	
 	private User user;
+	@ManyToOne	
+	private PartnerFund partnerfund;
 
 }

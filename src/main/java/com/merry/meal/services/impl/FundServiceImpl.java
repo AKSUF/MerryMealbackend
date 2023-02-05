@@ -16,14 +16,17 @@ import org.springframework.util.StringUtils;
 
 import com.merry.meal.config.FundsResponse;
 import com.merry.meal.data.Account;
+import com.merry.meal.data.CareMember;
 import com.merry.meal.data.Fund;
+import com.merry.meal.data.PartnerFund;
 import com.merry.meal.data.User;
 import com.merry.meal.exceptions.ResourceNotFounException;
 import com.merry.meal.payload.FunDto;
-
+import com.merry.meal.payload.PartnerFundDto;
 import com.merry.meal.payload.UserDto;
 import com.merry.meal.repo.AccountRepo;
 import com.merry.meal.repo.FundRepo;
+import com.merry.meal.repo.PartnerFundRepository;
 import com.merry.meal.services.FundService;
 import com.merry.meal.status.Status;
 import com.merry.meal.utils.JwtUtils;
@@ -38,6 +41,9 @@ public class FundServiceImpl implements FundService {
 	private FundRepo fundRepo;
 	@Autowired
 	private ModelMapper modelmapper;
+	
+	@Autowired
+	private PartnerFundRepository partnerFundRepository;
 	private String getJWTFromRequest(HttpServletRequest request) {
 		String bearerToken = request.getHeader("Authorization");
 		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
@@ -191,12 +197,27 @@ public class FundServiceImpl implements FundService {
 	    return postResponse;
 	}
 
-	
 
-	
-	
-	
-	
 
-	
-}
+
+
+	@Override
+	public List<PartnerFundDto> getAllFundUser(HttpServletRequest request) {
+		String token = getJWTFromRequest(request);
+		String email = jwtUtils.getUserNameFromToken(token);
+		Account account = accountRepo.findByEmail(email).get();
+		System.out.println("////////////////////////////////////");
+		System.out.println(account);
+		System.out.println("////////////////////////////////////");
+		if (account.getUser() != null) {
+			User user = account.getUser();
+			System.out.println();
+			user.getUser_id();
+		}
+		User user=account.getUser();
+		List<PartnerFund> fundcamb= user.getPartnerfund();
+		List<PartnerFund>allfunds=this.partnerFundRepository.findAll();
+		List<PartnerFundDto>fundto=fundcamb.stream().map((fund)->this.modelmapper.map(fund, PartnerFundDto.class)).collect(Collectors.toList());
+		return fundto;
+
+}}

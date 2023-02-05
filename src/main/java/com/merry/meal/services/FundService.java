@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.merry.meal.config.FundsResponse;
 import com.merry.meal.payload.FunDto;
+import com.merry.meal.payload.PartnerFundDto;
 
 public interface FundService {
 
@@ -24,6 +25,8 @@ public interface FundService {
 	List<FunDto> getFundAsUser(Long userId, HttpServletRequest request);
 
 	FundsResponse getAllPost(Integer pageNumber, Integer pazeSize, String sortBy, String sortDir);
+
+	List<PartnerFundDto> getAllFundUser(HttpServletRequest request);
 
 
 
