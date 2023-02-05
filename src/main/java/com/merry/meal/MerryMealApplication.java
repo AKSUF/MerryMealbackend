@@ -64,7 +64,7 @@ public class MerryMealApplication implements CommandLineRunner {
 			// career giver role
 			Role role_careergiver = new Role();
 			role_careergiver.setRole_id(AppConstants.ROLE_CARERGIVER.longValue());
-			role_careergiver.setRole_name("ROLE_CARERGIVER");
+			role_careergiver.setRole_name("ROLE_CAREGIVER");
 
 
 			
