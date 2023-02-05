@@ -24,8 +24,12 @@ import com.merry.meal.data.Fund;
 import com.merry.meal.data.Session;
 import com.merry.meal.data.User;
 import com.merry.meal.exceptions.ResourceNotFounException;
+import com.merry.meal.exceptions.ResourceNotFoundException;
+import com.merry.meal.payload.CareMemberDto;
+import com.merry.meal.payload.CaregiveDto;
 import com.merry.meal.payload.SessionDto;
 import com.merry.meal.repo.AccountRepo;
+import com.merry.meal.repo.CareMemberRepository;
 import com.merry.meal.repo.FundRepo;
 import com.merry.meal.repo.SessionRepository;
 import com.merry.meal.services.CaregiveService;
@@ -44,7 +48,8 @@ public class CaregiveServiceImpl implements CaregiveService {
 	private AccountRepo accountRepo;
 	@Autowired
 	private SessionRepository sessionRepo;
-
+@Autowired
+	private CareMemberRepository careMemberRepository;
 	private String getJWTFromRequest(HttpServletRequest request) {
 		String bearerToken = request.getHeader("Authorization");
 		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
@@ -96,7 +101,7 @@ public class CaregiveServiceImpl implements CaregiveService {
 		System.out.println("get user entity" + user);
 		Session session = this.modelmapper.map(sessionDto, Session.class);
 		session.setCareStatus(CareStatus.Available.name());
-		session.setUser(user);
+	
 		Session saveSession = this.sessionRepo.save(session);
 		return this.modelmapper.map(saveSession, SessionDto.class);
 
@@ -193,5 +198,37 @@ public class CaregiveServiceImpl implements CaregiveService {
 
 		return newResponse;
 	}
+	@Override
+	public List<CareMemberDto> getAllCareMember(HttpServletRequest request) {
+		
+		String token = getJWTFromRequest(request);
+		String email = jwtUtils.getUserNameFromToken(token);
+		Account account = accountRepo.findByEmail(email).get();
+		System.out.println("////////////////////////////////////");
+		System.out.println(account);
+		System.out.println("////////////////////////////////////");
+		if (account.getUser() != null) {
+			User user = account.getUser();
+			System.out.println();
+			user.getUser_id();
+		}
 
+User user=account.getUser();
+List<CareMember> carememb= user.getCaremember();
+
+		List<CareMember>allCareMembers=this.careMemberRepository.findAll();
+		List<CareMemberDto>caregiveDtos=carememb.stream().map((caremember)->this.modelmapper.map(caremember,CareMemberDto.class)).collect(Collectors.toList());
+		return caregiveDtos;
+	}
+	@Override
+	public SessionDto changeStatus(Long sessionId, String status) {
+		Session newStatus=this.sessionRepo.findById(sessionId).orElseThrow(()->new ResourceNotFoundException("session","session id",sessionId.toString()));
+		newStatus.setStatus(status);
+		Session changeSession=this.sessionRepo.save(newStatus);
+		return this.modelmapper.map(newStatus,SessionDto.class);
+	}
+
+
+	
+	
 }

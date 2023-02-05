@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -61,9 +62,12 @@ public class User {
 	private List<Session>session;
 	
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
+
+@OneToMany(mappedBy = "user", cascade = CascadeType.MERGE)
 	private List<CareMember>caremember;
 	
 	@OneToMany(mappedBy = "caregiver", cascade = CascadeType.MERGE)
 	private List<CareMember>caremembercaregiver;
+
+	
 }

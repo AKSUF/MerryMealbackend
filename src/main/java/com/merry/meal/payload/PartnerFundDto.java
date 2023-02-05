@@ -1,19 +1,18 @@
 package com.merry.meal.payload;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.merry.meal.data.Caregiver;
+import com.merry.meal.data.Fund;
 import com.merry.meal.data.User;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
-public class CareMemberDto {
-	private Long carememberId;
+public class PartnerFundDto {
+	private Long partner_fund_id;
 	private UserDto user;
-	private UserDto caregiver;
-	
+private FunDto fund;
+
 }

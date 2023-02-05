@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.merry.meal.config.SessionResponse;
+import com.merry.meal.payload.CareMemberDto;
+import com.merry.meal.payload.CaregiveDto;
 import com.merry.meal.payload.SessionDto;
 
 public interface CaregiveService {
@@ -23,4 +25,10 @@ public interface CaregiveService {
 
 
 	SessionResponse getSession(Integer pageNumber, Integer pazeSize, String sortBy);
+
+	List<CareMemberDto> getAllCareMember(HttpServletRequest request);
+
+	SessionDto changeStatus(Long sessionId, String status);
+
+
 }

@@ -21,7 +21,7 @@ public class PartnerFund {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int partner_fund_id;
+	private Long partner_fund_id;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")

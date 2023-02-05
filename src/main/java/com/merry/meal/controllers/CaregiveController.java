@@ -25,10 +25,12 @@ import com.merry.meal.data.Account;
 import com.merry.meal.data.Session;
 import com.merry.meal.data.User;
 import com.merry.meal.payload.ApiResponse;
-
+import com.merry.meal.payload.CareMemberDto;
+import com.merry.meal.payload.CaregiveDto;
 import com.merry.meal.payload.SessionDto;
 
 import com.merry.meal.repo.AccountRepo;
+import com.merry.meal.repo.CareMemberRepository;
 import com.merry.meal.services.CaregiveService;
 import com.merry.meal.utils.JwtUtils;
 
@@ -44,10 +46,15 @@ private JwtUtils jwtUtils;
 private AccountRepo accountRepo;
 @Autowired
 private ModelMapper modelmapper;
+@Autowired
+private CareMemberRepository careMemberRepository;
+
 @PostMapping("/caregivepost")
 public ResponseEntity<SessionDto>newSession(@RequestBody SessionDto sessionDto,HttpServletRequest request){
 	System.out.println("fgfdgghfdhfdghdfgdfgdfggetdgdgdsgsdgds/////////////////////////////////////");
 	SessionDto newSessionDto=this.caregiveService.addSession(sessionDto, request);
+	System.out.println("fgfdgghfdhfdghdfgdfgdfggetdgdgdsgsdgds/////////////////////////////////////");
+	System.out.println("This is session management"+newSessionDto);
 	return new ResponseEntity<SessionDto>(newSessionDto,HttpStatus.CREATED);
 	
 }
@@ -57,6 +64,7 @@ public ResponseEntity<SessionDto>newSession(@RequestBody SessionDto sessionDto,H
 public ResponseEntity<SessionDto>newCreateSession(@RequestBody SessionDto sessionDto,HttpServletRequest request, Long userId){
 	System.out.println("ffhfghfgdgdfgdgd");
 	SessionDto newSessionDto=this.caregiveService.createSession(sessionDto, userId, request);
+	
 	return new ResponseEntity<SessionDto>(newSessionDto,HttpStatus.CREATED);
 	
 }
@@ -107,5 +115,16 @@ public ResponseEntity<SessionResponse> getAllSession(
 }
 
 
+@GetMapping("/careMember")
+public ResponseEntity<List<CareMemberDto>>getCaremember(HttpServletRequest request){
+	List<CareMemberDto>caregiveDtos=this.caregiveService.getAllCareMember(request);
+	return new ResponseEntity<List<CareMemberDto>>(caregiveDtos,HttpStatus.OK);
+}
+@GetMapping("/carestatus")
+public ResponseEntity<SessionDto>changeStatus(@PathVariable Long sessionId,@RequestParam String status){
+	SessionDto newSessionDto=this.caregiveService.changeStatus(sessionId,status);
+	return new ResponseEntity<SessionDto>(newSessionDto,HttpStatus.OK);
+	
+}
 
 }
