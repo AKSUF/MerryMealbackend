@@ -31,6 +31,10 @@ public class CareMember {
 	@ManyToOne
 	@JoinColumn(name = "caregiverId" ,referencedColumnName = "user_id")
 	private User caregiver;
+	
 
+	@ManyToOne
+	@JoinColumn(name = "fundId" ,referencedColumnName = "fundId")
+	private User session;
 	
 }

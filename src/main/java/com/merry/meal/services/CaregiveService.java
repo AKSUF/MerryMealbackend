@@ -30,5 +30,9 @@ public interface CaregiveService {
 
 	SessionDto changeStatus(Long sessionId, String status);
 
+	SessionDto getCarerequest(Long sessionId, HttpServletRequest request);
+
+	List<SessionDto> getallrequest(HttpServletRequest request);
+
 
 }

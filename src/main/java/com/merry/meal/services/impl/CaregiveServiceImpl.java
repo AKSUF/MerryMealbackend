@@ -2,6 +2,7 @@ package com.merry.meal.services.impl;
 
 import java.awt.print.Pageable;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,7 +75,7 @@ public class CaregiveServiceImpl implements CaregiveService {
 		}
 		// User user = account.getUser();
 		CareMember careMember = new CareMember();
-		User user = careMember.getUser();
+		User user = account.getUser();
 
 		System.out.println("get user entity" + user);
 		Session session = this.modelmapper.map(sessionDto, Session.class);
@@ -97,7 +98,7 @@ public class CaregiveServiceImpl implements CaregiveService {
 		}
 
 		CareMember careMember = new CareMember();
-		User user = careMember.getUser();
+		User user = account.getUser();
 		System.out.println("get user entity" + user);
 		Session session = this.modelmapper.map(sessionDto, Session.class);
 		session.setCareStatus(CareStatus.Available.name());
@@ -132,7 +133,7 @@ public class CaregiveServiceImpl implements CaregiveService {
 		}
 
 		CareMember careMember = new CareMember();
-		User user = careMember.getUser();
+		User user = account.getUser();
 		System.out.println("get user entity" + user);
 		List<Session> sessions = this.accountRepo.findByUser(user);
 		List<SessionDto> sessionDtos = sessions.stream()
@@ -226,6 +227,46 @@ List<CareMember> carememb= user.getCaremember();
 		newStatus.setStatus(status);
 		Session changeSession=this.sessionRepo.save(newStatus);
 		return this.modelmapper.map(newStatus,SessionDto.class);
+	}
+	@Override
+	public SessionDto getCarerequest(Long sessionId, HttpServletRequest request) {
+		String token = getJWTFromRequest(request);
+		String email = jwtUtils.getUserNameFromToken(token);
+		Account account = accountRepo.findByEmail(email).get();
+		System.out.println("////////////////////////////////////");
+		System.out.println(account);
+		System.out.println("////////////////////////////////////");
+		if (account.getUser() != null) {
+			User user = account.getUser();
+			System.out.println();
+			user.getUser_id();
+		}
+		User user=account.getUser();
+		List<CareMember> carememb= user.getCaremember();
+		Optional<Session>requestedforcare=this.sessionRepo.findById(sessionId);
+		
+		return null;
+	}
+	
+	//getallrequestforcaregive
+	@Override
+	public List<SessionDto> getallrequest(HttpServletRequest request) {
+		String token = getJWTFromRequest(request);
+		String email = jwtUtils.getUserNameFromToken(token);
+		Account account = accountRepo.findByEmail(email).get();
+		System.out.println("////////////////////////////////////");
+		System.out.println(account);
+		System.out.println("////////////////////////////////////");
+		if (account.getUser() != null) {
+			User user = account.getUser();
+			System.out.println();
+			user.getUser_id();
+		}
+		User user=account.getUser();
+		List<CareMember> carememb= user.getCaremember();
+		List<Session>getallsession=this.sessionRepo.findAll();
+		List<SessionDto>sessionDtos=getallsession.stream().map((session)->this.modelmapper.map(session, SessionDto.class)).collect(Collectors.toList());
+		return sessionDtos;
 	}
 
 

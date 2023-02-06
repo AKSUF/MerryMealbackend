@@ -114,17 +114,28 @@ public ResponseEntity<SessionResponse> getAllSession(
 	
 }
 
-
+//get all caregiver details
 @GetMapping("/careMember")
 public ResponseEntity<List<CareMemberDto>>getCaremember(HttpServletRequest request){
 	List<CareMemberDto>caregiveDtos=this.caregiveService.getAllCareMember(request);
 	return new ResponseEntity<List<CareMemberDto>>(caregiveDtos,HttpStatus.OK);
 }
-@GetMapping("/carestatus")
+//change status
+@PutMapping("/carestatus")
 public ResponseEntity<SessionDto>changeStatus(@PathVariable Long sessionId,@RequestParam String status){
 	SessionDto newSessionDto=this.caregiveService.changeStatus(sessionId,status);
 	return new ResponseEntity<SessionDto>(newSessionDto,HttpStatus.OK);
 	
 }
+//all avaiable request
+@GetMapping("/getRequest")
+public ResponseEntity<List<SessionDto>>getAllrequest(HttpServletRequest request){
+	List<SessionDto> getallrequest=this.caregiveService.getallrequest(request);
+	
+	return new ResponseEntity<List<SessionDto>>(getallrequest,HttpStatus.OK);
+	
+}
+
+
 
 }

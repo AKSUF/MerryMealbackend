@@ -217,7 +217,7 @@ public class FundServiceImpl implements FundService {
 		User user=account.getUser();
 		List<PartnerFund> fundcamb= user.getPartnerfund();
 		List<PartnerFund>allfunds=this.partnerFundRepository.findAll();
-		List<PartnerFundDto>fundto=fundcamb.stream().map((fund)->this.modelmapper.map(fund, PartnerFundDto.class)).collect(Collectors.toList());
+		List<PartnerFundDto>fundto=allfunds.stream().map((fund)->this.modelmapper.map(fund, PartnerFundDto.class)).collect(Collectors.toList());
 		return fundto;
 
 }}
